@@ -1,4 +1,6 @@
 # must - Sprinkle Panic Everywhere
+[![Go Reference](https://pkg.go.dev/badge/github.com/tebeka/must.svg)](https://pkg.go.dev/github.com/tebeka/must)
+[![Tests](https://github.com/tebeka/must/actions/workflows/go.yml/badge.svg)](https://github.com/tebeka/must/actions/workflows/go.yml)
 
 In some cases, you'd like to declare package level variables from a function call.
 In this case, you can't check for an error and must panic.
