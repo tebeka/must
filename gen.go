@@ -1,5 +1,7 @@
 //go:build ignore
 
+// Generates mustn.go, see go:generate directives in must.go
+
 package main
 
 import (
