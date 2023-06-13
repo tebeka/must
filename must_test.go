@@ -22,7 +22,7 @@ func NewRing[T any](size int) (*RingBuffer[T], error) {
 	return &r, nil
 }
 
-func TestMustOK(t *testing.T) {
+func TestWrapOK(t *testing.T) {
 	fn := must.Wrap(NewRing[int])
 	size := 7
 	buf := fn(size)
@@ -31,7 +31,7 @@ func TestMustOK(t *testing.T) {
 	}
 }
 
-func TestMustPanic(t *testing.T) {
+func TestWrapPanic(t *testing.T) {
 	fn := must.Wrap(NewRing[int])
 	size := -1
 	defer func() {
@@ -41,4 +41,37 @@ func TestMustPanic(t *testing.T) {
 	}()
 
 	fn(size)
+}
+
+func Max(values ...int) (int, error) {
+	if len(values) == 0 {
+		return 0, fmt.Errorf("max with no values")
+	}
+
+	m := values[0]
+	for _, v := range values[1:] {
+		if v > m {
+			m = v
+		}
+	}
+
+	return m, nil
+}
+
+func TestWrapVariadicOK(t *testing.T) {
+	fn := must.WrapVariadic(Max)
+	v := fn(1, 2, 3)
+	if v != 3 {
+		t.Fatal(v)
+	}
+}
+
+func TestWrapVariadicPanic(t *testing.T) {
+	defer func() {
+		if err := recover(); err == nil {
+			t.Fatalf("no panic")
+		}
+	}()
+	fn := must.WrapVariadic(Max)
+	fn()
 }
